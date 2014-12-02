@@ -42,3 +42,10 @@ Session var test: 242
 The RequestVar and TransientRequestVar appear to perform similarly, with TransientRequestVar being
 a bit slower. SessionVar is in a completely different order of magnitude, meaning it is comparitively
 much more expensive to compute.
+
+## Analysis
+
+To dig deeper and know for sure why these numbers are what they are I'd need a YourKit license, which
+I don't have. But I can speculate a bit. For reading SessionVars we do a bit of synchronization to
+pull that value out in a thread-safe manner. My money is that this is paying the cost of that
+synchronization.
